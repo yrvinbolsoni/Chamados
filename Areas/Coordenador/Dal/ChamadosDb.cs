@@ -5,6 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using Chamados.Models;
+using Chamados.Models.Dropdown;
+
 
 namespace Chamados.DAO
 {
@@ -85,6 +87,141 @@ namespace Chamados.DAO
             var lista = db.CAD_COLABORADOR.Where(x => x.emp == 1).ToList();
             return lista;
         }
+
+
+        #region Drop Busca Com todos os itens em primeiro 
+
+        public List<Generic> DropDownEmpresaTodas()
+        {
+            List<Generic> lista = (from emp in db.CAD_EMP
+                         select new Generic
+                         {
+                             id = emp.id,
+                             descs = emp.descs
+                         }).ToList();
+
+            // adicioando empresa
+            lista.Add(new Generic
+            {
+                id = 0,
+                descs = "Todas as empresas"
+            });
+
+            List<Generic> ListaOrdenada = lista
+                .OrderByDescending(x => x.id == 0)
+                .ThenBy(x => x.id == 0)
+                .ToList();
+
+             
+            return ListaOrdenada;
+        }
+
+
+        public List<Generic> DropDownTipoTodos()
+        {
+
+            List<Generic> lista = (from tipo in db.ch_tipo
+                         select new Generic
+                         {
+                             id = tipo.id,
+                             descs = tipo.descs
+                         }).ToList();
+
+            lista.Add(new Generic
+            {
+                id = 0,
+                descs = "Todos os status"
+            });
+
+
+            List<Generic> ListaOrdenada =  lista
+                .OrderByDescending(x => x.id == 0)
+                .ThenBy(x => x.id == 0)
+                .ToList();
+
+            return ListaOrdenada;
+
+        }
+
+
+        public List<Generic> DropDownClassificacoTodos()
+        {
+            List<Generic> lista = (from clasific in db.ch_classificacao
+                                   select new Generic
+                                   {
+                                       id = clasific.id,
+                                       descs =  clasific.descs
+                                   }).ToList();
+
+            lista.Add(new Generic
+            {
+                id = 0,
+                descs = "Todas as classificações"
+            });
+
+
+            List<Generic> ListaOrdenada = lista
+                         .OrderByDescending(x => x.id == 0)
+                         .ThenBy(x => x.id == 0)
+                         .ToList();
+
+            return ListaOrdenada;
+        }
+
+
+        public List<Generic> DropDownColaboradorTodos()
+        {
+            List<Generic> lista = (from colab in db.CAD_COLABORADOR
+                                   where colab.emp == 1
+                                   select new Generic
+                                   {
+                                       id = colab.id,
+                                       descs = colab.nome
+                                   }).ToList();
+
+            lista.Add(new Generic
+            {
+                id = 0,
+                descs = "Todos os colaboradores"
+            });
+
+            List<Generic> ListaOrdenada = lista
+                         .OrderByDescending(x => x.id == 0)
+                         .ThenBy(x => x.id == 0)
+                         .ToList();
+
+            return ListaOrdenada;
+        }
+
+        public List<Generic> SuporteResponsavelTodos()
+        {
+
+            List<Generic> lista = (from respo in db.CAD_COLABORADOR
+                                   where respo.tipo_u == 1002 || respo.tipo_u == 1003
+                                   select new Generic
+                                   {
+                                       id = respo.id,
+                                       descs = respo.nome
+                                   }).ToList();
+
+            lista.Add(new Generic
+            {
+                id = 0,
+                descs = "Todos os responsável"
+            });
+
+            List<Generic> ListaOrdenada = lista
+                         .OrderByDescending(x => x.id == 0)
+                         .ThenBy(x => x.id == 0)
+                         .ToList();
+
+            return ListaOrdenada;
+
+        }
+        #endregion
+
+
+
 
         public List<CAD_COLABORADOR> SuporteResponsavel()
         {

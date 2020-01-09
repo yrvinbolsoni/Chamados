@@ -32,8 +32,26 @@ namespace Chamados.Areas.Coordenador.Controllers
 
             List<ch_chamados> ch = new List<ch_chamados>();
 
+            ViewBag.emp = new SelectList(chamadoDal.DropDownEmpresaTodas(), "id", "descs");
+            ViewBag.tipo = new SelectList(chamadoDal.DropDownTipoTodos(), "id", "descs");
+            ViewBag.classif = new SelectList(chamadoDal.DropDownClassificacoTodos(), "id", "descs");
+            ViewBag.user_cli = new SelectList(chamadoDal.DropDownColaboradorTodos(), "id", "descs");
+            ViewBag.user_responsavel = new SelectList(chamadoDal.SuporteResponsavelTodos(), "id", "descs");
+
             return View(ch);
         }
+
+        [HttpPost]
+        public ActionResult BuscaChamados(FormCollection f)
+        {
+
+            List<ch_chamados> ch = new List<ch_chamados>();
+
+            return View(ch);
+        }
+        
+
+
 
 
         private void PainelAnaliseCordenador()

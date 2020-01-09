@@ -3,66 +3,83 @@
 @{
     ViewBag.Title = "Busca Chamados";
 }
+<script>
+          function ClienteEmpresa(valor) {  /// pesquisa drop ajax
+            $.ajax({
+                type: "GET",
+                url:'@Url.Action("GetUserPorEmpresa")?id='+valor,
+                data: "{}",
+                success: function (data) {
+                    var row;
+                    for (var i = 0; i < data.length; i++) {
+                        row += '<option value="' + data[i].id + '">' + data[i].desc + '</option>';
+                    }
+                    $("#user_cli").html(row);
+                }
+            });
+        }
 
+</script>
 <div class="card" style="max-width: 60rem;">
     <div class="card-header text-white bg-dark">
-       Buscar Chamados 
+       Buscar Chamados  
     </div>
     <div class="card-body">
-        <div class="row">
-            @Html.Label("Número Chamado", htmlAttributes: new { @class = "control-label col-lg-2" })
-            <input name="NrChamado" id="NrChamado" type="number" class=" col-lg-4 form-control" />
-        </div>
-
-        <br />
-        <div class="row">
-            @Html.Label("Cliente", htmlAttributes: new { @class = "control-label col-lg-2" })
-            <input name="NrChamado" id="NrChamado" type="number" class=" col-lg-4 form-control" />
-        </div>
-
-        <br />
-        <div class="row">
-            @Html.Label("Status", htmlAttributes: new { @class = "control-label col-lg-2" })
-            <input name="NrChamado" id="NrChamado" type="number" class=" col-lg-4 form-control" />
-        </div>
-
-        <br />
-        <div class="row">
-            @Html.Label("Classificação", htmlAttributes: new { @class = "control-label col-lg-2" })
-            <input name="NrChamado" id="NrChamado" type="number" class=" col-lg-4 form-control" />
-        </div>
-
-        <br />
-        <div class="row">
-            @Html.Label("Usuários", htmlAttributes: new { @class = "control-label col-lg-2" })
-            <input name="NrChamado" id="NrChamado" type="number" class=" col-lg-4 form-control" />
-        </div>
-
-        <br />
-        <div class="row">
-            @Html.Label("Responsável", htmlAttributes: new { @class = "control-label col-lg-2" })
-            <input name="NrChamado" id="NrChamado" type="number" class=" col-lg-4 form-control" />
-        </div>
-
-        <br />
-        <div class="row">
-            @Html.Label("De:", htmlAttributes: new { @class = "control-label col-lg-1" })
-            <input name="NrChamado" id="NrChamado" type="date" class=" col-lg-2 form-control" />
-
-            @Html.Label("até:", htmlAttributes: new { @class = "control-label col-lg-1" })
-            <input name="NrChamado" id="NrChamado" type="date" class=" col-lg-2 form-control" />
-        </div>
-
-        <div class="row">
-            <div >
-                <button class=" btn btn-danger">tesxt</button>
+        @using (Html.BeginForm("BuscaChamados", "Ticket", FormMethod.Post))
+        {
+            <div class="row">
+                @Html.Label("Número Chamado", htmlAttributes: new { @class = "control-label col-lg-2" })
+                <input name="NrChamado" id="NrChamado" type="number" class=" col-lg-4 form-control" />
             </div>
-        </div>
 
+            <br />
+            <div class="row">
+                @Html.Label("Empresa", htmlAttributes: new { @class = "control-label col-lg-2" })
+                @Html.DropDownList("emp", null, htmlAttributes: new { @class = "col-lg-4  form-control ", @onchange = "ClienteEmpresa(this.value)" })
+            </div>
 
+            <br />
+            <div class="row">
+                @Html.Label("Status", htmlAttributes: new { @class = "control-label col-lg-2" })
+                @Html.DropDownList("tipo", null, new { @class = "col-lg-4  form-control" })
+            </div>
 
+            <br />
+            <div class="row">
+                @Html.Label("Classificação", htmlAttributes: new { @class = "control-label col-lg-2" })
+                @Html.DropDownList("classif", null, htmlAttributes: new { @class = "col-lg-4  form-control"  })
+            </div>
+            <br />
+            <div class="row">
+                @Html.Label("Usuários", htmlAttributes: new { @class = "control-label col-lg-2" })
+                @Html.DropDownList("user_cli", null, htmlAttributes: new { @class = "col-lg-4 form-control" })
 
+            </div>
+            <br />
+            <div class="row">
+                @Html.Label("Responsável", htmlAttributes: new { @class = "control-label col-lg-2" })
+                @Html.DropDownList("user_responsavel", null, htmlAttributes: new { @class = "col-lg-4  form-control" })
+            </div>
 
+            <br />
+            <div class="row">
+                @Html.Label("De:", htmlAttributes: new { @class = "control-label col-lg-1" })
+                <input name="NrChamado" id="NrChamado" type="date" class=" col-lg-2 form-control" />
+
+                @Html.Label("até:", htmlAttributes: new { @class = "control-label col-lg-1" })
+                <input name="NrChamado" id="NrChamado" type="date" class=" col-lg-2 form-control" />
+            </div>
+            <br />
+
+            <div class="row">
+                <div class="col-3"></div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Buscar" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+        }
 
     </div>
 
