@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html >
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title </title>
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="wrapper">
+        <div class="page-wrapper chiller-theme toggled">
+            <nav id="sidebar" class="sidebar-wrapper">
+                <div class="sidebar-content">
+                    <div class="sidebar-brand">
+                        <a href="#">Chamados</a>
+                        <div class="text-danger" id="close-sidebar">
+                            <i class="fas fa-times"></i>
+                        </div>
+                    </div>
+                    <div class="sidebar-header">
+                        <div class="user-pic">
+                            <img class="img-responsive img-rounded" src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg"
+                                 alt="User picture">
+                        </div>
+                        <div class="user-info">
+                            <span class="user-name">
+                                @User.Identity.Name.ToString().Replace(@"TIYRVINB\", "")
+                            </span>
+                            <span class="user-role">Administrator</span>
+                            <span class="user-status">
+                                <i class="fa fa-circle"></i>
+                                <span>Online</span>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- sidebar-header  -->
+                    <div class="sidebar-search">
+                        <div>
+                            @using (Html.BeginForm("BuscaRapida", "Ticket", FormMethod.Post))
+                            {
+                                <div class="input-group">
+                                    <input type="text" id="textoBusca" name="textoBusca" class="form-control search-menu" placeholder="Search...">
+                                    <div class="input-group-append">
+                                        <button tabindex="0"><span class="fa fa-search"></span></button>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <!-- sidebar-search  -->
+                    <div class="sidebar-menu">
+                        <ul>
+                            <li class="sidebar-dropdown">
+                                <a href="#">
+                                    <i class="fa fa-folder"></i>
+                                    <span>Chamados</span>
+                                </a>
+                                <div class="sidebar-submenu">
+                                    <ul>
+                                        <li>
+                                            @Html.ActionLink("Meus Chamados", "Index", "Ticket", null, new { @class = "nav-link" })
+                                        </li>
+                                        <li>
+                                            @Html.ActionLink("Novo Chamado", "Novo", "Ticket", null, new { @class = "nav-link" })
+                                        </li>
+
+                                        <li>
+                                            <a href="#">Buscar Chamado</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                    </div>
+              
+            </nav>
+
+            <!-- Page Content Holder -->
+            <main class="page-content">
+                <div class="container-fluid">
+                    <a id="show-sidebar" href="#">
+                        <img class="img-responsive img-rounded" src="~/Content/img/logo-grieg.png"
+                             alt="User picture">
+                    </a>
+                    <hr />
+                    @*<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                            <h1 class="h2">@ViewBag.Title</h1>
+                            <div class="btn-toolbar mb-2 mb-md-0">
+                                <div class="btn-group mr-2">
+                                    <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+                                </div>
+                                <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+                                    <span data-feather="calendar"></span>
+                                    This week
+                                </button>
+                            </div>
+                        </div>*@
+                    @RenderBody()
+                </div>
+                <hr />
+                <footer>
+                    <p>&copy; @DateTime.Now.Year - Sistema de Chamados GRIEG</p>
+                </footer>
+            </main>
+            @Scripts.Render("~/bundles/jquery")
+            @Scripts.Render("~/bundles/bootstrap")
+            @RenderSection("scripts", required: false)
+</body>
+</html>

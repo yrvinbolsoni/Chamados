@@ -1,0 +1,49 @@
+﻿<div class="modal fade modal-anexo" tabindex="-1" role="dialog" aria-labelledby="ModelAnexo" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h3 class="modal-title" id="lineModalLabel">Anexos</h3>
+            </div>
+            <div class="modal-body">
+
+                @if (ViewBag.Anexo != null)
+                {
+                    <table class="table table-hover ">
+                        <thead>
+                            <tr>
+                                <th>Nome do arquivo</th>
+                                <th>Excluir</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var anexo in ViewBag.Anexo)
+                            {
+                                <tr>
+                                    <td>@Html.ActionLink((string)anexo.a_name, "MostarArquivo", new { id = anexo.id }, new { @class = " ", @target = "_blank" }) </td>
+                                    <td>@Html.ActionLink(" ", "RemoverAnexos", new { id = anexo.id, IdDesk = Model.id }, new { @class = "fa fa-trash-alt", @style = "color:red", onclick = "return confirm('Tem certeza de que deseja excluir este item ? ');" })
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <hr />
+                }
+
+                @using (Html.BeginForm("AdicionarAnexo", "Ticket", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <hr />
+                    <h4>Adicionar Anexos</h4>
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Arquivo<span class="text-danger"> MAX(2mb)</span></label>
+                        <input type="hidden" id="DeskId" name="DeskId" value="@(Model.id)" />
+                        <input type="file" required multiple name="postedFile" id="postedFile" />
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" value="Adicionar" class="btn btn-success" />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

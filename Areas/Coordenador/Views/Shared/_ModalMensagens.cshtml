@@ -1,0 +1,57 @@
+﻿ 
+<script>
+    function Notificacao(valor) {
+        $.ajax({
+            type: "GET",
+           url:'@Url.Action("MarcarMensagensLida")?ID='+valor,
+            data: "{}",
+            success: function (data) {
+                $("#notificacao").css("display", "none");
+            }
+        });
+    }
+</script>
+
+<div class="modal fade bd-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h3 class="modal-title" id="lineModalLabel">Mensagens</h3>
+            </div>
+            <div class="modal-body">
+                @foreach (var m in ViewBag.Mensagens)
+                {
+                    <div class="@(m.CAD_COLABORADOR.username == User.Identity.Name.ToString().Replace(@"VMWEB\", "")?"card text-right":"card text-left") ">
+                        <div class="card-body">
+                            <p><b>@m.CAD_COLABORADOR.nome </b>  </p>
+                            <p class="card-text"> @m.msg</p>
+                            <span class="text-muted"><span class="fa fa-clock"></span> @m.dt_post </span>
+                            <br />
+                            <i class="text-success @(m.leitura_cli == "S"?"fa fa-reply-all":"")"></i>
+                        </div>
+                    </div>
+                    <br />
+                }
+            </div>
+            @using (Html.BeginForm("AdicionarMensagem", "Ticket", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+            <input type="text" id="IdChamado" name="IdChamado" style="display:none;"  value="@Model.id" />
+                <h5 class="col-3"> Nova Mensagem </h5>
+                <div class="col-md-10">
+                    @Html.TextArea("msg", new { @class = "form-control InputMaximo ", @cols = 80, @rows = 5 })
+                </div>
+                <br />
+                <div class="modal-footer">
+                    <div class="btn-group btn-group-justified" role="group" aria-label="group button">
+
+                        <div class="btn-group" role="group">
+                            <button type="submit" class="btn btn-dark btn-hover-green">Salvar</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

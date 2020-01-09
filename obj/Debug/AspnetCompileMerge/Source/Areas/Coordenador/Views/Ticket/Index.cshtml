@@ -1,0 +1,102 @@
+﻿@model IEnumerable<Chamados.Models.ch_chamados>
+
+@{
+    ViewBag.Title = "Meus Chamados";
+}
+
+@Html.Partial("~/Areas/Coordenador/Views/Shared/_ErrosPadrao.cshtml")
+@Html.Partial("~/Areas/Coordenador/Views/Shared/_PainelAnaliseChamados.cshtml")
+
+@{
+    string TableStyle = "";
+    if (Model.Count() == 0)
+    {
+        TableStyle = "none";
+        <h3 class="text-danger">Nenhum chamado encontrado !</h3>
+    }
+}
+
+<br />
+<table class="table table-responsive-sm table-sm" style="display:@TableStyle">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                Nr
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CAD_EMP.descs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.user_responsavel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.user_cli)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.assunto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ch_classificacao.descs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ch_subclassif.descs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ch_status.descs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.dt_abertura)
+            </th>
+            <th>
+                Ver
+            </th>
+        </tr>
+    </thead>
+
+
+    @foreach (var item in Model)
+    {
+
+        using (Html.BeginForm("ClassificarTicket", "Ticket", FormMethod.Post))
+        {
+            @Html.HiddenFor(m => item.id)
+            <tr>
+                <td>
+                    @item.id
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CAD_EMP.descs)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CAD_COLABORADOR1.username)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CAD_COLABORADOR.username)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.assunto)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.ch_classificacao.descs)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ch_subclassif.descs)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.ch_status.descs)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.dt_abertura)
+                </td>
+                <td>
+                    @Html.ActionLink(" ", "Detalhes", "Ticket", new { id = item.id }, new { @class = "text-white fa fa-eye   btn-sm btn-primary" })
+                </td>
+
+            </tr>
+
+        }
+
+    }
+</table>

@@ -1,0 +1,25 @@
+﻿@model IEnumerable<Chamados.Models.ch_prioridade>
+
+@{
+    ViewBag.Title = "Prioridades";
+}
+
+<p>
+    @Html.ActionLink("Nova Prioridade", "NovaPrioridade", null, new { @class = "btn btn-primary btn-sm" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.descs)
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.descs)
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,30 @@
+﻿@if (TempData["Mensagem"] != null)
+{
+<div class="@TempData["typeMensagem"]" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    @{
+        string msg = TempData["Mensagem"].ToString();
+        // separa pelo caracter especial
+        string[] novamsg = msg.Split('*');
+        // verifica se é uma lista
+        if (novamsg.Count() > 1)
+        {
+            foreach (var msgs in novamsg)
+            {
+                // pesquisa dentro da string se contem em algum lugar escrito DANGER
+                var VerificaEstilo = msgs.Contains("danger");
+                
+                // operador ternario para mudar o estido 
+                // replace para remover o danger da string 
+            <p class="@(VerificaEstilo == true?"text-danger" :"" )">@msgs.Replace("danger", "")</p>
+            }
+        }
+        if (novamsg.Count() == 1 )
+        {
+            <p>@msg </p>
+        }
+    }
+
+
+</div>
+  }

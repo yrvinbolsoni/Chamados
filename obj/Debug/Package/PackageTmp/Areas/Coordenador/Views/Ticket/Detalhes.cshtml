@@ -1,0 +1,284 @@
+﻿@model Chamados.Models.ch_chamados
+
+@{
+    ViewBag.Title = "Detalhes";
+}
+@*Modal de mensagens*@
+@Html.Partial("~/Areas/Coordenador/Views/Shared/_ModalMensagens.cshtml", Model)
+@*Modal De anexos*@
+@Html.Partial("~/Areas/Coordenador/Views/Shared/_ModalAnexos.cshtml", Model)
+
+ 
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.Partial("~/Areas/Coordenador/Views/Shared/_ErrosPadrao.cshtml")
+
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.id)
+
+            // Segundo Painel
+            <div class="card  " style="max-width: 60rem;">
+                <div class="card-header text-white bg-dark">
+                    Informações sobre chamado
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-2">
+                            <b>
+                                Responsável
+                            </b>
+                        </div>
+                        <div class="col-4">
+                            @Html.DisplayFor(model => model.CAD_COLABORADOR1.nome)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <b>
+                                @Html.DisplayNameFor(model => model.CAD_EMP.descs)
+
+                            </b>
+                        </div>
+                        <div class="col-4">
+                            @Html.DisplayFor(model => model.CAD_EMP.descs)
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="text-dark col-2">
+                            <b>
+                                @Html.DisplayNameFor(model => model.CAD_COLABORADOR.nome)
+                            </b>
+                        </div>
+                        <div class="col-4">
+                            @Html.DisplayFor(model => model.CAD_COLABORADOR.nome)
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="text-dark col-2">
+                            <b>
+                                Ip
+                            </b>
+                        </div>
+                        <div class="col-4">
+                            @ViewBag.Ip
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="text-dark col-2">
+                            <b>
+                                Ramal
+                            </b>
+                        </div>
+                        <div class="col-4">
+                            @ViewBag.Ramal
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="text-dark col-2">
+                            <b>
+                                Celular
+                            </b>
+                        </div>
+                        <div class="col-4">
+                            @ViewBag.Celular
+                        </div>
+                    </div>
+
+
+
+
+
+
+                    <div class="row">
+                        <div class="col-2">
+                            <b>
+                                @Html.DisplayNameFor(model => model.ch_classificacao.descs)
+                            </b>
+                        </div>
+                        <div class="col-3">
+                            @Html.DisplayFor(model => model.ch_classificacao.descs)
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <b>
+                                @Html.DisplayNameFor(model => model.ch_subclassif.descs)
+                            </b>
+                        </div>
+                        <div class="col-3">
+                            @Html.DisplayFor(model => model.ch_subclassif.descs)
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <b>
+                                @Html.DisplayNameFor(model => model.ch_prioridade.descs)
+                            </b>
+                        </div>
+                        <div class="col-3">
+                            @Html.DisplayFor(model => model.ch_prioridade.descs)
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-2">
+                            <b>
+                                @Html.DisplayNameFor(model => model.ch_tipo.descs)
+
+                            </b>
+                        </div>
+                        <div class="col-3">
+                            @Html.DisplayFor(model => model.ch_tipo.descs)
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-2">
+                            <b>
+                                @Html.DisplayNameFor(model => model.com_copia)
+
+                            </b>
+                        </div>
+                        <div class="col-3">
+                            @Html.DisplayFor(model => model.com_copia)
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-2">
+                            <b>
+                                @Html.DisplayNameFor(model => model.dt_abertura)
+
+                            </b>
+                        </div>
+                        <div class="col-3">
+                            @Html.DisplayFor(model => model.dt_abertura)
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-2">
+                            <b>
+                                @Html.DisplayNameFor(model => model.dt_encerramento)
+
+                            </b>
+                        </div>
+                        <div class="col-2">
+                            @Html.DisplayFor(model => model.dt_encerramento)
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-2">
+                            <b>
+                                @Html.DisplayNameFor(model => model.assunto)
+
+                            </b>
+                        </div>
+                        <div class="col-3">
+                            @Html.DisplayFor(model => model.assunto)
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-2">
+                            <b>
+                                @Html.DisplayNameFor(model => model.descricacao)
+
+                            </b>
+                        </div>
+                        <div class="col-8">
+                            @Html.DisplayFor(model => model.descricacao)
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+            //Segundo painel
+            <div class="card  " style="max-width: 60rem; ">
+                <div class="card-header text-white bg-dark">
+                    Alteração de Status do Chamado
+                </div>
+                <div class="card-body ">
+                    <div class="row">
+                        <div class="col-2">
+                            Status Atual
+                        </div>
+                        <div class="text-danger col-3">
+                            @Html.DisplayFor(model => model.ch_status.descs)
+                        </div>
+                    </div>
+                    <br />
+                    <div class="form-group row">
+                        @Html.LabelFor(model => model.statusE, htmlAttributes: new { @class = "control-label col-sm-2 col-form-label" })
+                        <div class="col-sm-10">
+                            @Html.DropDownList("statusE", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.statusE, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3">
+                        </div>
+                        <div class="col-lg-6">
+                            <input type="submit" value="Alterar Status do chamado" class="btn btn-sm  btn-dark" />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <br />
+
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-2">
+
+                    </div>
+
+                    <div class="col-6">
+                        @Html.ActionLink(" Voltar", "Index", null, new { @class = "fa fa-arrow-alt-circle-left btn  btn-sm btn-dark", @style = " margin-right: 10px;" })
+
+
+                        <a class="btn btn-dark  btn-sm text-white" data-toggle="modal" data-target=".bd-modal-lg" onclick="Notificacao(@Model.id)">
+                            Ver Mensagens
+                            <i class="fa fa-envelope"></i>
+                            <span class="badge badge-pill badge-danger notification" id="notificacao" style="position: absolute; @(ViewBag.NumeroMensagens == 0 ? " display:none;":"") top: 0;">@ViewBag.NumeroMensagens </span>
+                        </a>
+
+
+                        <a class="btn btn-dark btn-sm  text-white" style=" margin-left: 10px;" data-toggle="modal" data-target=".modal-anexo">
+                            Anexo  Ver/Adiciona
+                            <i class="fa fa-paperclip"></i>
+                            <span class="badge badge-pill badge-warning notification" id="notificacao" style="position: absolute; @(ViewBag.QuantAnexo == 0 ? " display:none;":"") top: 0;">@ViewBag.QuantAnexo</span>
+                        </a>
+
+                    </div>
+                    @*ViewBag.Anexo*@
+                </div>
+
+            </div>
+        }
+
+
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }

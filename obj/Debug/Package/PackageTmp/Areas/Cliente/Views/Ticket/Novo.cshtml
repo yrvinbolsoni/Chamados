@@ -1,0 +1,93 @@
+﻿@model Chamados.Models.ch_chamados
+
+@{
+    ViewBag.Title = "Novo Chamado";
+}
+
+@Html.Partial("~/Areas/Cliente/Views/Shared/_ErrosPadrao.cshtml")
+
+
+@using (Html.BeginForm("Novo", "Ticket", FormMethod.Post, new { enctype = "multipart/form-data" }))
+
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="card" style="max-width: 60rem;">
+            <div class="card-header text-white bg-dark">
+                Novo Chamado
+            </div>
+
+            <div class="card-body">
+                @*Linah 2*@
+                <div class="row">
+                    <div class="col-10">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.assunto, htmlAttributes: new { @class = "control-label  " })
+                            @Html.EditorFor(model => model.assunto, new { htmlAttributes = new { @class = "form-control InputMaximo " } })
+                            @Html.ValidationMessageFor(model => model.assunto, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-10">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.descricacao, htmlAttributes: new { @class = "control-label  " })
+                            @Html.TextAreaFor(model => model.descricacao, new { @class = "form-control InputMaximo", @cols = 80, @rows = 8 })
+                            @Html.ValidationMessageFor(model => model.descricacao, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.com_copia, "Com copia", htmlAttributes: new { @class = "control-label " })
+                            @Html.EditorFor(model => model.com_copia, new { htmlAttributes = new { @class = "form-control InputMaximo" } })
+                            @Html.ValidationMessageFor(model => model.com_copia, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        @Html.LabelFor(model => model.prioridade, htmlAttributes: new { @class = "control-label  " })
+                        @Html.DropDownList("prioridade", null, new { @class = "custom-select", @size = "3" })
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.tipo, htmlAttributes: new { @class = "control-label " })
+                            @Html.DropDownList("tipo", null, new { @class = "custom-select", @size = "3" })
+                            @Html.ValidationMessageFor(model => model.tipo, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+
+                <hr />
+                <h4>Adicionar Anexos</h4>
+
+                <input type="file" multiple name="postedFile" id="postedFile" />
+                <p class="text-danger">Arquivo MAX(2mb)</p>
+                <hr />
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        @Html.ActionLink(" Voltar", "Index", null, new { @class = "fa fa-arrow-alt-circle-left btn-sm btn btn-dark" })
+                        <input type="submit" value="Cadastrar" class="btn btn btn-sm btn-success" />
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+}
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

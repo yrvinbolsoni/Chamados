@@ -1,0 +1,26 @@
+﻿@model IEnumerable<Chamados.Models.ch_status>
+
+@{
+    ViewBag.Title = "Status";
+}
+
+<p>
+    @Html.ActionLink("Nova Status", "NovoStatus", null, new { @class = "btn btn-primary btn-sm" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.descs)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.descs)
+        </td>
+    </tr>
+}
+
+</table>

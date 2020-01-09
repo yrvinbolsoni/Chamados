@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Chamados.Models.ch_subclassif>
+
+@{
+    ViewBag.Title = "SubClassificacao";
+}
+
+
+<p>
+    @Html.ActionLink("Nova Status", "NovaSubClassificacao", null, new { @class = "btn btn-primary btn-sm" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ch_classificacao.descs)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.descs)
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ch_classificacao.descs)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.descs)
+        </td>
+    </tr>
+}
+
+</table>

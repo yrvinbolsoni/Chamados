@@ -1,0 +1,135 @@
+﻿@model IEnumerable<Chamados.Models.ch_chamados>
+
+@{
+    ViewBag.Title = "TicketsAberto";
+}
+
+
+@section Scripts {
+    <script>
+        function ValorDrop(valor, idDropdonw) {  /// pesquisa drop ajax
+            $.ajax({
+                type: "GET",
+                url:'@Url.Action("GetSubClassificacao")?id='+valor,
+                data: "{}",
+                success: function (data) {
+                    var row;
+                    for (var i = 0; i < data.length; i++) {
+                        row += '<option value="' + data[i].id + '">' + data[i].desc + '</option>';
+                    }
+                    $("#sub_classif"+idDropdonw).html(row);
+                }
+            });
+        }
+    </script>
+}
+
+<h2>Chamados em aberto</h2>
+@{
+    string TableStyle = "";
+
+    if (Model.Count() == 0)
+    {
+        TableStyle = "none";
+
+        <h3 class="text-danger">Nenhum chamado encontrado !</h3>
+    }
+}
+<br />
+<table class="table table-responsive-sm table-sm" style="display:@TableStyle">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CAD_EMP.descs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.user_responsavel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ch_classificacao.descs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ch_subclassif.descs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ch_status.descs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.assunto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.dt_abertura)
+            </th>
+
+            <th>
+                Atribuir
+            </th>
+            <th>
+                Ver
+            </th>
+        </tr>
+    </thead>
+
+
+    @foreach (var item in Model)
+    {
+
+        using (Html.BeginForm("ClassificarTicket", "Ticket", FormMethod.Post))
+        {
+            @Html.HiddenFor(m => item.id)
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CAD_EMP.descs)
+                </td>
+                <td>
+                    @if (@Html.DisplayFor(modelItem => item.CAD_COLABORADOR1.nome).ToHtmlString() == "")
+                    {
+                        @Html.DropDownList("user_responsavel", null, htmlAttributes: new { @class = "form-control form-control-sm" })
+                    }
+
+                    @Html.DisplayFor(modelItem => item.CAD_COLABORADOR1.nome)
+                </td>
+                <td>
+                    @if (@Html.DisplayFor(modelItem => item.ch_classificacao.descs).ToHtmlString() == "")
+                    {
+                        @Html.DropDownList("classif", null, htmlAttributes: new { @class = "form-control form-control-sm", @onchange = "ValorDrop(this.value ,"+@item.id+")" })
+                    }
+                    @Html.DisplayFor(modelItem => item.ch_classificacao.descs)
+                </td>
+                <td>
+                    
+                    @if (@Html.DisplayFor(modelItem => item.ch_subclassif.descs).ToHtmlString() == "")
+                    {
+                        @Html.DropDownList("sub_classif", null, htmlAttributes: new {  @id="sub_classif"+@item.id+"" ,  @class = "form-control form-control-sm" })
+                    }
+                    @Html.DisplayFor(modelItem => item.ch_subclassif.descs)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.ch_status.descs)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.assunto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.dt_abertura)
+                </td>
+
+                <td>
+                    @if (@Html.DisplayFor(modelItem => item.CAD_COLABORADOR1.nome).ToHtmlString() == "")
+                    {
+                        <button type="submit" value="Cadastrar" class="text-white btn-sm btn-success">Atribuir</button>
+                    }
+                </td>
+
+                <td>
+                    @Html.ActionLink(" ", "Detalhes", "Ticket", new { id = item.id }, new { @class = "text-white fa fa-eye   btn-sm btn-primary" })
+                </td>
+
+            </tr>
+
+        }
+
+    }
+</table>
