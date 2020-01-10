@@ -10,7 +10,7 @@
                 url:'@Url.Action("GetUserPorEmpresa")?id='+valor,
                 data: "{}",
                 success: function (data) {
-                    var row;
+                    var row = '<option value="0">Todos os Colaboradores</option>';
                     for (var i = 0; i < data.length; i++) {
                         row += '<option value="' + data[i].id + '">' + data[i].desc + '</option>';
                     }
@@ -22,14 +22,15 @@
 </script>
 <div class="card" style="max-width: 60rem;">
     <div class="card-header text-white bg-dark">
-       Buscar Chamados  
+        Buscar Chamados
     </div>
     <div class="card-body">
         @using (Html.BeginForm("BuscaChamados", "Ticket", FormMethod.Post))
         {
             <div class="row">
                 @Html.Label("Número Chamado", htmlAttributes: new { @class = "control-label col-lg-2" })
-                <input name="NrChamado" id="NrChamado" type="number" class=" col-lg-4 form-control" />
+                @Html.Editor("id", new { htmlAttributes = new { @class = "col-lg-4  form-control" } })
+
             </div>
 
             <br />
@@ -41,13 +42,13 @@
             <br />
             <div class="row">
                 @Html.Label("Status", htmlAttributes: new { @class = "control-label col-lg-2" })
-                @Html.DropDownList("tipo", null, new { @class = "col-lg-4  form-control" })
+                @Html.DropDownList("statusE", null, new { @class = "col-lg-4  form-control" })
             </div>
 
             <br />
             <div class="row">
                 @Html.Label("Classificação", htmlAttributes: new { @class = "control-label col-lg-2" })
-                @Html.DropDownList("classif", null, htmlAttributes: new { @class = "col-lg-4  form-control"  })
+                @Html.DropDownList("classif", null, htmlAttributes: new { @class = "col-lg-4  form-control" })
             </div>
             <br />
             <div class="row">
@@ -64,10 +65,11 @@
             <br />
             <div class="row">
                 @Html.Label("De:", htmlAttributes: new { @class = "control-label col-lg-1" })
-                <input name="NrChamado" id="NrChamado" type="date" class=" col-lg-2 form-control" />
+                @Html.Editor("dt_abertura", new { htmlAttributes = new { @class = "col-lg-2  form-control", @type = "date" } })
+
 
                 @Html.Label("até:", htmlAttributes: new { @class = "control-label col-lg-1" })
-                <input name="NrChamado" id="NrChamado" type="date" class=" col-lg-2 form-control" />
+                @Html.Editor("dt_encerramento", new { htmlAttributes = new { @class = "col-lg-2  form-control", @type = "date" } })
             </div>
             <br />
 
@@ -82,6 +84,105 @@
         }
 
     </div>
+</div>
 
 
-    </div>
+@{
+    string TableStyle = "";
+    if (Model.Count() == 0)
+    {
+        TableStyle = "none";
+        <h3 class="text-danger">Nenhum chamado encontrado !</h3>
+    }
+}
+
+<br />
+<table class="table table-responsive-sm table-sm" style="display:@TableStyle">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                Nr
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CAD_EMP.descs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.user_responsavel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.user_cli)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.assunto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ch_classificacao.descs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ch_subclassif.descs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ch_status.descs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.dt_abertura)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.dt_encerramento)
+            </th>
+            <th>
+                Ver
+            </th>
+        </tr>
+    </thead>
+
+
+    @foreach (var item in Model)
+    {
+
+        using (Html.BeginForm("ClassificarTicket", "Ticket", FormMethod.Post))
+        {
+            @Html.HiddenFor(m => item.id)
+    <tr>
+        <td>
+            @item.id
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CAD_EMP.descs)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CAD_COLABORADOR1.username)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CAD_COLABORADOR.username)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.assunto)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.ch_classificacao.descs)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ch_subclassif.descs)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.ch_status.descs)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.dt_abertura)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.dt_encerramento)
+        </td>
+        <td>
+            @Html.ActionLink(" ", "Detalhes", "Ticket", new { id = item.id }, new { @class = "text-white fa fa-eye   btn-sm btn-primary" })
+        </td>
+
+    </tr>
+
+        }
+
+    }
+</table>

@@ -33,7 +33,7 @@ namespace Chamados.Areas.Coordenador.Controllers
             List<ch_chamados> ch = new List<ch_chamados>();
 
             ViewBag.emp = new SelectList(chamadoDal.DropDownEmpresaTodas(), "id", "descs");
-            ViewBag.tipo = new SelectList(chamadoDal.DropDownTipoTodos(), "id", "descs");
+            ViewBag.statusE = new SelectList(chamadoDal.DropDownStatusTodos(), "id", "descs");
             ViewBag.classif = new SelectList(chamadoDal.DropDownClassificacoTodos(), "id", "descs");
             ViewBag.user_cli = new SelectList(chamadoDal.DropDownColaboradorTodos(), "id", "descs");
             ViewBag.user_responsavel = new SelectList(chamadoDal.SuporteResponsavelTodos(), "id", "descs");
@@ -42,12 +42,21 @@ namespace Chamados.Areas.Coordenador.Controllers
         }
 
         [HttpPost]
-        public ActionResult BuscaChamados(FormCollection f)
+        public ActionResult BuscaChamados( ch_chamados c)
         {
+            DateTime Ate = Convert.ToDateTime(c.dt_encerramento);
 
             List<ch_chamados> ch = new List<ch_chamados>();
 
-            return View(ch);
+            ViewBag.emp = new SelectList(chamadoDal.DropDownEmpresaTodas(), "id", "descs");
+            ViewBag.statusE = new SelectList(chamadoDal.DropDownStatusTodos(), "id", "descs");
+            ViewBag.classif = new SelectList(chamadoDal.DropDownClassificacoTodos(), "id", "descs");
+            ViewBag.user_cli = new SelectList(chamadoDal.DropDownColaboradorTodos(), "id", "descs");
+            ViewBag.user_responsavel = new SelectList(chamadoDal.SuporteResponsavelTodos(), "id", "descs");
+
+            var busca = chamadoDal.BuscaDetalhadaChamados(c , Ate);
+
+            return View(busca);
         }
         
 

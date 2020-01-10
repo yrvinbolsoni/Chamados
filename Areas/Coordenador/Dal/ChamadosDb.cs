@@ -33,6 +33,39 @@ namespace Chamados.DAO
 
         }
 
+
+        public List<ch_chamados> BuscaDetalhadaChamados(ch_chamados p , DateTime ate)
+        {
+            DateTime dt = new DateTime();
+
+            if (p.dt_abertura != dt && ate != dt)
+            {
+
+            }
+            //DateTime teste2 = dataInicial.ToString("dd/MM/yyyy");
+            if (ate == new DateTime())
+                ate = DateTime.Now;
+
+            var Buscando = (from ch in db.ch_chamados
+                            where (p.id != 0 ? ch.id == p.id : true)
+                            where (p.emp != 0 ? ch.emp == p.emp : ch.emp == ch.emp)
+                            where (p.statusE != 0 ? ch.statusE == p.statusE : ch.statusE == ch.statusE)
+                            where (p.classif != 0 ? ch.classif == p.classif : ch.classif == ch.classif)
+                            where (p.user_cli != 0 ? ch.user_cli == p.user_cli : ch.user_cli == ch.user_cli)
+                            where (p.user_responsavel != 0 ? ch.user_responsavel == p.user_responsavel : ch.user_responsavel == ch.user_responsavel)
+                            where (p.dt_abertura != dt && ate != dt ? ch.dt_abertura >= p.dt_abertura && ch.dt_abertura <= ate : true)
+                            select ch   );
+
+ 
+                .ToList();
+
+            return Buscando.ToList();
+
+        }
+
+
+
+
         public string[] NovoTicket(ch_chamados c , List<HttpPostedFileBase> postedFile)
         {
             try
@@ -117,10 +150,10 @@ namespace Chamados.DAO
         }
 
 
-        public List<Generic> DropDownTipoTodos()
+        public List<Generic> DropDownStatusTodos()
         {
 
-            List<Generic> lista = (from tipo in db.ch_tipo
+            List<Generic> lista = (from tipo in db.ch_status
                          select new Generic
                          {
                              id = tipo.id,
@@ -455,6 +488,10 @@ namespace Chamados.DAO
             {
                 ch_chamados Chamado = db.ch_chamados.Where(x => x.id == c.id).FirstOrDefault();
                 Chamado.statusE = c.statusE;
+                if (c.statusE == 7)
+                {
+                    Chamado.dt_encerramento = DateTime.Now;
+                }
 
                 db.Entry(Chamado).State = EntityState.Modified;
                 db.SaveChanges();

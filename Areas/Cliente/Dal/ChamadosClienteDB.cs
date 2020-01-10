@@ -105,6 +105,7 @@ namespace Chamados.Areas.Cliente.Dal
             try
             {
                 chamado.statusE = 7;
+                chamado.dt_encerramento = DateTime.Now;
                 db.Entry(chamado).State = EntityState.Modified;
                 db.SaveChanges();
                 utl.SetMensagem("true", "Chamado Finalizado", "success");

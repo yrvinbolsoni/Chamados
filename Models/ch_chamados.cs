@@ -57,6 +57,7 @@ namespace Chamados.Models
         public DateTime dt_abertura { get; set; }
 
         [DisplayName("Data Encerramento")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? dt_encerramento { get; set; }
 
         public virtual CAD_COLABORADOR CAD_COLABORADOR { get; set; }
